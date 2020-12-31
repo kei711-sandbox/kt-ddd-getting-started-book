@@ -10,4 +10,6 @@ data class UserName(val value: String) {
             "ユーザ名は${MIN_LENGTH}文字以上です。"
         }
     }
+
+    override fun toString(): String = this.value
 }
