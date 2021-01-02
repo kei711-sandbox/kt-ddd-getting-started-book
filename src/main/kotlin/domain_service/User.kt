@@ -1,6 +1,6 @@
 package domain_service
 
-import java.util.*
+import java.util.UUID
 
 class User(id: UserId, name: UserName) {
     lateinit var id: UserId

@@ -4,6 +4,4 @@ class UserService {
     fun exists(user: User): Boolean {
         TODO()
     }
-
-
 }
