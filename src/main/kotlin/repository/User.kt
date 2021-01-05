@@ -2,11 +2,8 @@ package repository
 
 import java.util.UUID
 
-class User(name: UserName) {
+data class User(val name: UserName) {
     var id: UserId
-        private set
-
-    var name: UserName = name
         private set
 
     init {
