@@ -1,26 +1,30 @@
 package repository
 
 import org.junit.jupiter.api.Test
-import kotlin.test.Ignore
-import kotlin.test.assertNotNull
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 internal class RepositoryTest {
     @Test
-    @Ignore
     fun createUser() {
-        val program = Program(UserRepository())
-        program.createUser("test")
+        testImpl(UserRepository(), "test1")
+    }
+
+    @Test
+    fun createUserWithExposed() {
+        testImpl(ExposedUserRepository(), "test2")
     }
 
     @Test
     fun createUserWithMock() {
-        val repo = InMemoryUserRepository()
-        val program = Program(repo)
-        program.createUser("test")
+        testImpl(InMemoryUserRepository(), "test3")
+    }
 
-        val user = repo.storage.values.first()
-        assertNotNull("test", user.name.value)
+    private fun testImpl(repo: IUserRepository, name: String) {
+        val program = Program(repo)
+        val user = program.createUser(name)
+        assertEquals(name, user.name.value)
 
         val service = UserService(repo)
         assertTrue(service.exists(user))

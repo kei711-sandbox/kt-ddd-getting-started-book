@@ -1,7 +1,7 @@
 package repository
 
 class Program(val userRepository: IUserRepository) {
-    fun createUser(userName: String) {
+    fun createUser(userName: String): User {
         val user = User(UserName(userName))
         val userService = UserService(userRepository)
         if (userService.exists(user)) {
@@ -9,5 +9,6 @@ class Program(val userRepository: IUserRepository) {
         }
 
         userRepository.save(user)
+        return user
     }
 }
