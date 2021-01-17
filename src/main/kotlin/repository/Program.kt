@@ -11,4 +11,8 @@ class Program(val userRepository: IUserRepository) {
         userRepository.save(user)
         return user
     }
+
+    fun deleteUser(user: User) {
+        userRepository.delete(user)
+    }
 }

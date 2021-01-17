@@ -34,6 +34,25 @@ class UserRepository : IUserRepository {
         }
     }
 
+    override fun delete(user: User) {
+        var conn: Connection? = null
+        var statement: PreparedStatement? = null
+
+        try {
+            conn = DriverManager.getConnection(CONNECTION_STRING, DB_USER, DB_PASSWORD)
+            // language=PostgreSQL
+            val sql = """
+                DELETE FROM users WHERE id = ?
+            """.trimIndent()
+            statement = conn.prepareStatement(sql)
+            statement?.setString(1, user.id.value)
+            statement.executeUpdate()
+        } finally {
+            statement?.close()
+            conn?.close()
+        }
+    }
+
     override fun find(name: UserName): User? {
         var conn: Connection? = null
         var statement: PreparedStatement? = null

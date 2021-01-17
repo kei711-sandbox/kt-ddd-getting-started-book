@@ -29,6 +29,15 @@ class ExposedUserRepository : IUserRepository {
             users.firstOrNull()?.toEntity()
         }
     }
+
+    override fun delete(user: User) {
+        Database.connect(url = CONNECTION_STRING, user = DB_USER, password = DB_PASSWORD)
+        return transaction {
+//            UserDao.findById(user.id.value)?.delete()
+            // DSL のほうがクエリは少ない
+            Users.deleteWhere { Users.id eq user.id.value }
+        }
+    }
 }
 
 // Schema

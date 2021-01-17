@@ -28,5 +28,8 @@ internal class RepositoryTest {
 
         val service = UserService(repo)
         assertTrue(service.exists(user))
+
+        program.deleteUser(user)
+        assertFalse(service.exists(user))
     }
 }

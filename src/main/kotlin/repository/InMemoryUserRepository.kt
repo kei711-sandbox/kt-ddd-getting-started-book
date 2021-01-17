@@ -8,4 +8,8 @@ class InMemoryUserRepository(defaultValues: MutableMap<UserId, User> = mutableMa
     }
 
     override fun find(name: UserName): User? = storage.values.firstOrNull { it.name == name }
+
+    override fun delete(user: User) {
+        storage.remove(user.id)
+    }
 }
