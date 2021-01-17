@@ -2,7 +2,7 @@ package repository
 
 import java.util.UUID
 
-data class User(val name: UserName) {
+data class User(val name: UserName, val mailAddress: MailAddress = MailAddress("")) {
     var id: UserId
         private set
 
@@ -10,7 +10,7 @@ data class User(val name: UserName) {
         this.id = UserId(UUID.randomUUID().toString())
     }
 
-    constructor(id: UserId, name: UserName) : this(name) {
+    constructor(id: UserId, name: UserName, mailAddress: MailAddress) : this(name, mailAddress) {
         this.id = id
     }
 

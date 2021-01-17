@@ -68,7 +68,8 @@ class UserRepository : IUserRepository {
             while (resultSet.next()) {
                 val id = resultSet.getString("id")
                 val userName = resultSet.getString("name")
-                return User(UserId(id), UserName(userName))
+                val mailAddress = resultSet.getString("mail_address")
+                return User(UserId(id), UserName(userName), MailAddress(mailAddress))
             }
         } finally {
             resultSet?.close()
@@ -93,7 +94,8 @@ class UserRepository : IUserRepository {
             while (resultSet.next()) {
                 val id = resultSet.getString("id")
                 val userName = resultSet.getString("name")
-                return User(UserId(id), UserName(userName))
+                val mailAddress = resultSet.getString("mail_address")
+                return User(UserId(id), UserName(userName), MailAddress(mailAddress))
             }
         } finally {
             resultSet?.close()

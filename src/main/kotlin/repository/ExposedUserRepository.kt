@@ -57,6 +57,7 @@ open class StringUUIDTable(name: String = "", columnName: String = "id") : IdTab
 
 object Users : StringUUIDTable() {
     val name = varchar("name", 30)
+    val mailAddress = text("mail_address")
 }
 
 // DAO
@@ -64,17 +65,20 @@ class UserDao(id: EntityID<String>) : Entity<String>(id) {
     companion object : EntityClass<String, UserDao>(Users)
 
     var name by Users.name
+    var mailAddress by Users.mailAddress
 
-    fun toEntity(): User = User(UserId(this.id.toString()), UserName(this.name))
+    fun toEntity(): User = User(UserId(this.id.toString()), UserName(this.name), MailAddress(this.mailAddress))
 }
 
 fun User.toDAO(): UserDao {
     val id = this.id.value
     val n = this.name.value
+    val m = this.mailAddress.value
     return UserDao.new(
         id,
         init = {
             name = n
+            mailAddress = m
         }
     )
 }
