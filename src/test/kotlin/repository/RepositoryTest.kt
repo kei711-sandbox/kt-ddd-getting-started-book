@@ -25,6 +25,8 @@ internal class RepositoryTest {
         val program = Program(repo)
         val user = program.createUser(name)
         assertEquals(name, user.name.value)
+        assertEquals(user, repo.find(user.id))
+        assertEquals(user, repo.find(user.name))
 
         val service = UserService(repo)
         assertTrue(service.exists(user))

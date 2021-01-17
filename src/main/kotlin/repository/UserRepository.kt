@@ -53,6 +53,31 @@ class UserRepository : IUserRepository {
         }
     }
 
+    override fun find(id: UserId): User? {
+        var conn: Connection? = null
+        var statement: PreparedStatement? = null
+        var resultSet: ResultSet? = null
+
+        try {
+            conn = DriverManager.getConnection(CONNECTION_STRING, DB_USER, DB_PASSWORD)
+            // language=PostgreSQL
+            val sql = "SELECT * FROM users WHERE id = ?"
+            statement = conn.prepareStatement(sql)
+            statement?.setString(1, id.value)
+            resultSet = statement.executeQuery()
+            while (resultSet.next()) {
+                val id = resultSet.getString("id")
+                val userName = resultSet.getString("name")
+                return User(UserId(id), UserName(userName))
+            }
+        } finally {
+            resultSet?.close()
+            statement?.close()
+            conn?.close()
+        }
+        return null
+    }
+
     override fun find(name: UserName): User? {
         var conn: Connection? = null
         var statement: PreparedStatement? = null

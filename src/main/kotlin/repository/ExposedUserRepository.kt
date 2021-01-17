@@ -22,6 +22,13 @@ class ExposedUserRepository : IUserRepository {
         transaction { user.toDAO() }
     }
 
+    override fun find(id: UserId): User? {
+        Database.connect(url = CONNECTION_STRING, user = DB_USER, password = DB_PASSWORD)
+        return transaction {
+            UserDao.findById(id.value)?.toEntity()
+        }
+    }
+
     override fun find(name: UserName): User? {
         Database.connect(url = CONNECTION_STRING, user = DB_USER, password = DB_PASSWORD)
         return transaction {

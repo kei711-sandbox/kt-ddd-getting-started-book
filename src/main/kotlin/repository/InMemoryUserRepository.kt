@@ -4,8 +4,10 @@ class InMemoryUserRepository(defaultValues: MutableMap<UserId, User> = mutableMa
     var storage: MutableMap<UserId, User> = defaultValues
 
     override fun save(user: User) {
-        storage[user.id] = user.copy()
+        storage[user.id] = user
     }
+
+    override fun find(id: UserId): User? = storage.getOrDefault(id, null)
 
     override fun find(name: UserName): User? = storage.values.firstOrNull { it.name == name }
 
