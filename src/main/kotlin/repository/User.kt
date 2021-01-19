@@ -2,8 +2,14 @@ package repository
 
 import java.util.UUID
 
-data class User(val name: UserName, val mailAddress: MailAddress = MailAddress("")) {
+class User(name: UserName, mailAddress: MailAddress = MailAddress("")) {
     var id: UserId
+        private set
+
+    var name: UserName = name
+        private set
+
+    var mailAddress: MailAddress = mailAddress
         private set
 
     init {
@@ -26,4 +32,12 @@ data class User(val name: UserName, val mailAddress: MailAddress = MailAddress("
     }
 
     override fun hashCode(): Int = id.hashCode()
+
+    fun changeName(name: UserName) {
+        this.name = name
+    }
+
+    fun changeMailAddress(mailAddress: MailAddress) {
+        this.mailAddress = mailAddress
+    }
 }
