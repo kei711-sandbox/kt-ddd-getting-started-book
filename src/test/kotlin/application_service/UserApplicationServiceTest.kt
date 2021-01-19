@@ -5,6 +5,7 @@ import repository.InMemoryUserRepository
 import repository.UserService
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class UserApplicationServiceTest {
     @Test
@@ -35,5 +36,16 @@ class UserApplicationServiceTest {
         assertEquals("test@example.com", updatedUser.mailAddress.value)
 
         repo.delete(user)
+    }
+
+    @Test
+    internal fun testUserDeleteCommand() {
+        val repo = InMemoryUserRepository()
+        val service = UserApplicationService(repo, UserService(repo))
+        val user = service.register("test")
+        val command = UserDeleteCommand(user.id.value)
+        assertNotNull(repo.find(user.id))
+        service.delete(command)
+        assertNull(repo.find(user.id))
     }
 }

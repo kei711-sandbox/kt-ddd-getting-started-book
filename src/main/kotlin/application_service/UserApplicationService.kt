@@ -42,6 +42,13 @@ class UserApplicationService(private val userRepository: IUserRepository, privat
 
         userRepository.save(user)
     }
+
+    fun delete(command: UserDeleteCommand) {
+        val targetId = UserId(command.id)
+        val user = userRepository.find(targetId) ?: throw UserNotFoundException(targetId)
+
+        userRepository.delete(user)
+    }
 }
 
 class UserNotFoundException(targetId: UserId) : Throwable()
